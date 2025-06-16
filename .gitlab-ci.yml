@@ -1,6 +1,5 @@
 stages:
-  - build
-  - test
+  - build-test
   - native-image
 
 variables:
@@ -12,26 +11,16 @@ cache:
   paths:
     - .m2/repository/
 
-build:
-  stage: build
+build-test:
+  stage: build-test
   image: maven:3.9-eclipse-temurin-21
   script:
     - echo "Building application with Java 21"
     - java -version
-    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS clean install
+    - mvn clean install
   artifacts:
     paths:
       - target/
-
-test:
-  stage: test
-  image: maven:3.9-eclipse-temurin-21
-  script:
-    - echo "Running tests with Java 21"
-    - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS test
-  artifacts:
-    reports:
-      junit: target/surefire-reports/*.xml
 
 native-image:
   stage: native-image
