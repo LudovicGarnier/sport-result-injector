@@ -4,6 +4,7 @@ import com.sportresult.client.NbaApiClient;
 import com.sportresult.season.dto.NbaSeasonDto;
 import com.sportresult.season.response.NbaSeasonResponse;
 import com.sportresult.season.service.NbaSeasonInjectorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/seasons")
 @RequiredArgsConstructor
+@Tag(name = "Season", description = "")
 public class NbaSeasonInjectorController {
 
     private final NbaSeasonInjectorService nbaSeasonInjectorService;
