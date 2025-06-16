@@ -25,6 +25,6 @@ public class NbaSeasonEntity {
     private int year;
 
     public NbaSeasonDto toDto() {
-        return new NbaSeasonDto(id, year);
+        return new NbaSeasonDto(year);
     }
 }

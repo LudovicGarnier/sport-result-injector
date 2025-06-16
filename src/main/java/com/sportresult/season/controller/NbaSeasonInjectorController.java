@@ -25,7 +25,7 @@ public class NbaSeasonInjectorController {
     @Autowired
     private NbaApiClient nbaApiClient;
 
-    @GetMapping("/seasons")
+    @GetMapping()
     public ResponseEntity<List<NbaSeasonDto>> getSeasonsFromApi() {
         NbaSeasonResponse response = nbaApiClient.getSeasons();
 
