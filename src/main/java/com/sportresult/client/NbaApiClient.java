@@ -3,6 +3,7 @@ package com.sportresult.client;
 
 import com.sportresult.config.NbaApiFeignClientConfig;
 import com.sportresult.season.response.NbaSeasonResponse;
+import com.sportresult.team.response.NbaTeamResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,4 +13,7 @@ public interface NbaApiClient {
 
     @GetMapping("/seasons/")
     NbaSeasonResponse getSeasons();
+
+    @GetMapping("/teams/")
+    NbaTeamResponse getTeams();
 }
