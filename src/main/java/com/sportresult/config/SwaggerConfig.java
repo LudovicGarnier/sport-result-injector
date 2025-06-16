@@ -10,6 +10,11 @@ public class SwaggerConfig {
 
     @Bean
     OpenAPI customOpenAPI() {
-        return new OpenAPI().info(new Info().title("Sport Result Injector").version("1.0").description("Inject Datas to DB From RapidApi endpoints"));
+        return new OpenAPI().info(
+                new Info()
+                        .title("Sport Result Injector")
+                        .version("1.0")
+                        .description("Inject Datas to DB From RapidApi endpoints")
+        );
     }
 }
