@@ -22,6 +22,10 @@ public class NbaSeasonInjectorService {
 
     private final NbaSeasonInjectorRepository nbaSeasonInjectorRepository;
 
+    public List<NbaSeasonDto> availableSeasons() {
+        return nbaSeasonInjectorRepository.findAll().stream().map(NbaSeasonEntity::toDto).collect(Collectors.toList());
+    }
+
     @Transactional
     public List<NbaSeasonDto> injectSeasons(NbaSeasonResponse response) {
         if (response == null || response.getResponse().isEmpty()) {
