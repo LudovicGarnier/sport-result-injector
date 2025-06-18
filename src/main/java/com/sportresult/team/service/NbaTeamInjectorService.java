@@ -3,8 +3,8 @@ package com.sportresult.team.service;
 import com.sportresult.team.dto.NbaTeamDto;
 import com.sportresult.team.entity.NbaTeamEntity;
 import com.sportresult.team.repository.NbaTeamInjectorRepository;
-import com.sportresult.team.response.LeagueInfo;
-import com.sportresult.team.response.LeaguesData;
+import com.sportresult.team.response.TeamLeagueInfo;
+import com.sportresult.team.response.TeamLeaguesData;
 import com.sportresult.team.response.NbaTeamResponse;
 import com.sportresult.team.response.TeamData;
 import jakarta.transaction.Transactional;
@@ -23,6 +23,10 @@ import java.util.stream.Collectors;
 public class NbaTeamInjectorService {
 
     private final NbaTeamInjectorRepository nbaTeamInjectorRepository;
+
+    public List<NbaTeamDto> findAllTeams() {
+        return nbaTeamInjectorRepository.findAll().stream().map(NbaTeamEntity::toDto).collect(Collectors.toList());
+    }
 
     @Transactional
     public List<NbaTeamDto> injectTeams(NbaTeamResponse response) {
@@ -66,10 +70,8 @@ public class NbaTeamInjectorService {
     }
 
     private NbaTeamEntity createNbaTeamEntity(TeamData teamData) {
-        LeaguesData leaguesData = teamData.getLeagues();
-        if (teamData.getLeagues() == null) {
-            leaguesData = LeaguesData.builder().leagueInfo(LeagueInfo.builder().build()).build();
-        }
+        TeamLeaguesData teamLeaguesData = buildLeagueDatasAndInfoFromNullValues(teamData);
+
         return NbaTeamEntity.builder()
                 .oldId(teamData.getId())
                 .name(teamData.getName())
@@ -79,9 +81,36 @@ public class NbaTeamInjectorService {
                 .logo(teamData.getLogo())
                 .allStar(teamData.getAllStar())
                 .nbaFranchise(teamData.getNbaFranchise())
-                .conference(leaguesData.getLeagueInfo().getConference())
-                .division(leaguesData.getLeagueInfo().getDivision())
+                .conference(teamLeaguesData.getTeamLeagueInfo().getConference())
+                .division(teamLeaguesData.getTeamLeagueInfo().getDivision())
                 .build();
+    }
+
+    private TeamLeaguesData buildLeagueDatasAndInfoFromNullValues(TeamData teamData) {
+        TeamLeaguesData teamLeaguesData = teamData.getLeagues();
+        teamLeaguesData = buildTeamLeaguesData(teamData, teamLeaguesData);
+
+        teamData.setLeagues(teamLeaguesData);
+
+        TeamLeagueInfo teamLeagueInfo = teamLeaguesData.getTeamLeagueInfo();
+        teamLeagueInfo = buildTeamLeaguesInfo(teamData, teamLeagueInfo);
+
+        teamLeaguesData.setTeamLeagueInfo(teamLeagueInfo);
+        return teamLeaguesData;
+    }
+
+    private TeamLeagueInfo buildTeamLeaguesInfo(TeamData teamData, TeamLeagueInfo teamLeagueInfo) {
+        if (teamData.getLeagues().getTeamLeagueInfo() == null) {
+            teamLeagueInfo = TeamLeagueInfo.builder().build();
+        }
+        return teamLeagueInfo;
+    }
+
+    private static TeamLeaguesData buildTeamLeaguesData(TeamData teamData, TeamLeaguesData teamLeaguesData) {
+        if (teamData.getLeagues() == null) {
+            teamLeaguesData = TeamLeaguesData.builder().teamLeagueInfo(TeamLeagueInfo.builder().build()).build();
+        }
+        return teamLeaguesData;
     }
 
     /**

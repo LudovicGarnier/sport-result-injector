@@ -1,7 +1,7 @@
 package com.sportresult;
 
-import com.sportresult.team.response.LeagueInfo;
-import com.sportresult.team.response.LeaguesData;
+import com.sportresult.team.response.TeamLeagueInfo;
+import com.sportresult.team.response.TeamLeaguesData;
 import com.sportresult.team.response.TeamData;
 
 public class ModelFactory {
@@ -62,11 +62,11 @@ public class ModelFactory {
                 .build();
 
         if (conference != null && division != null) {
-            LeagueInfo leagueInfo = LeagueInfo.builder()
+            TeamLeagueInfo teamLeagueInfo = TeamLeagueInfo.builder()
                     .division(division)
                     .conference(conference).build();
-            LeaguesData leagues = LeaguesData.builder()
-                    .leagueInfo(leagueInfo).build();
+            TeamLeaguesData leagues = TeamLeaguesData.builder()
+                    .teamLeagueInfo(teamLeagueInfo).build();
             teamData.setLeagues(leagues);
         }
 
