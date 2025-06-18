@@ -36,7 +36,7 @@ public class NbaSeasonInjectorService {
         Set<Integer> requestedYears = new HashSet<>(response.getResponse());
         Set<Integer> existingYears = nbaSeasonInjectorRepository.findYearsByYearIn(requestedYears);
 
-        // Filter out years that already exist
+        // Filter years that already exist
         List<NbaSeasonEntity> newSeasonEntities = requestedYears.stream()
                 .filter(year -> !existingYears.contains(year))
                 .map(year -> NbaSeasonEntity.builder()
