@@ -33,6 +33,7 @@ public class NbaPlayerInjectorService {
 
     private final NbaTeamInjectorService nbaTeamInjectorService;
 
+    @Transactional
     public Map<Integer, List<List<NbaPlayerDto>>> injectAllPlayerPerYear(NbaApiClient nbaApiClient, int year) {
         Map<Integer, List<List<NbaPlayerDto>>> players = new HashMap<>();
         List<NbaTeamDto> nbaTeamDtos = nbaTeamInjectorService.findAllTeams();
