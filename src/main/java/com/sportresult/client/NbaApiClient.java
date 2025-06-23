@@ -2,6 +2,7 @@ package com.sportresult.client;
 
 
 import com.sportresult.config.NbaApiFeignClientConfig;
+import com.sportresult.game.response.NbaGameResponse;
 import com.sportresult.player.response.NbaPlayerResponse;
 import com.sportresult.season.response.NbaSeasonResponse;
 import com.sportresult.team.response.NbaTeamResponse;
@@ -21,4 +22,10 @@ public interface NbaApiClient {
 
     @GetMapping("/players?team={teamId}&season={seasonYear}")
     NbaPlayerResponse getPlayersPerTeamAndSeason(@PathVariable String teamId, @PathVariable String seasonYear);
+
+    @GetMapping("/games?season={seasonYear}")
+    NbaGameResponse getGamesPerSeason(@PathVariable String seasonYear);
+
+    @GetMapping("/games?id={id}")
+    NbaGameResponse getGamesPerId(@PathVariable int id);
 }
