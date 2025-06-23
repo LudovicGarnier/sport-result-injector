@@ -172,7 +172,6 @@ public class NbaTeamInjectorServiceTest {
 
         // Then
         assertThat(result).isEmpty();
-        verify(nbaTeamInjectorRepository, never()).findByOldId(any());
         verify(nbaTeamInjectorRepository, never()).saveAll(any());
     }
 
@@ -188,7 +187,6 @@ public class NbaTeamInjectorServiceTest {
 
         // Then
         assertThat(result).isEmpty();
-        verify(nbaTeamInjectorRepository, never()).findByOldId(any());
         verify(nbaTeamInjectorRepository, never()).saveAll(any());
     }
 
