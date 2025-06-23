@@ -3,10 +3,10 @@ package com.sportresult.team.service;
 import com.sportresult.team.dto.NbaTeamDto;
 import com.sportresult.team.entity.NbaTeamEntity;
 import com.sportresult.team.repository.NbaTeamInjectorRepository;
-import com.sportresult.team.response.TeamLeagueInfo;
-import com.sportresult.team.response.TeamLeaguesData;
 import com.sportresult.team.response.NbaTeamResponse;
 import com.sportresult.team.response.TeamData;
+import com.sportresult.team.response.TeamLeagueInfo;
+import com.sportresult.team.response.TeamLeaguesData;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,10 @@ public class NbaTeamInjectorService {
 
     public List<NbaTeamDto> findAllTeams() {
         return nbaTeamInjectorRepository.findAll().stream().map(NbaTeamEntity::toDto).collect(Collectors.toList());
+    }
+
+    public Optional<NbaTeamEntity> getTeamByOldId(Long teamId) {
+        return nbaTeamInjectorRepository.findByOldId(teamId);
     }
 
     @Transactional
@@ -120,4 +125,7 @@ public class NbaTeamInjectorService {
         return teamData.getNbaFranchise() && (!teamData.getAllStar());
     }
 
+    public NbaTeamEntity save(NbaTeamEntity nbaTeamEntity) {
+        return nbaTeamInjectorRepository.saveAndFlush(nbaTeamEntity);
+    }
 }
