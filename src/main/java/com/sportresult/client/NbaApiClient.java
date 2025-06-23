@@ -5,6 +5,7 @@ import com.sportresult.config.NbaApiFeignClientConfig;
 import com.sportresult.game.response.NbaGameResponse;
 import com.sportresult.player.response.NbaPlayerResponse;
 import com.sportresult.season.response.NbaSeasonResponse;
+import com.sportresult.standing.response.NbaStandingsResponse;
 import com.sportresult.team.response.NbaTeamResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,4 +29,7 @@ public interface NbaApiClient {
 
     @GetMapping("/games?id={id}")
     NbaGameResponse getGamesPerId(@PathVariable int id);
+
+    @GetMapping("/standings?league={league}&season={seasonYear}")
+    NbaStandingsResponse getStandingsPerYear(@PathVariable String league, @PathVariable String seasonYear);
 }
