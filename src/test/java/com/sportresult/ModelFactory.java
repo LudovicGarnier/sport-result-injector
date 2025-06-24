@@ -1,8 +1,8 @@
 package com.sportresult;
 
-import com.sportresult.team.response.TeamLeagueInfo;
-import com.sportresult.team.response.TeamLeaguesData;
-import com.sportresult.team.response.TeamData;
+import com.sportresult.client.response.team.TeamLeagueInfo;
+import com.sportresult.client.response.team.TeamLeaguesData;
+import com.sportresult.client.response.team.TeamData;
 
 public class ModelFactory {
 

@@ -1,10 +1,9 @@
 package com.sportresult.season.service;
 
-import com.sportresult.game.entity.NbaGameEntity;
 import com.sportresult.season.dto.NbaSeasonDto;
 import com.sportresult.season.entity.NbaSeasonEntity;
 import com.sportresult.season.repository.NbaSeasonInjectorRepository;
-import com.sportresult.season.response.NbaSeasonResponse;
+import com.sportresult.client.response.season.NbaSeasonResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
