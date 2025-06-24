@@ -2,11 +2,11 @@ package com.sportresult.client;
 
 
 import com.sportresult.config.NbaApiFeignClientConfig;
-import com.sportresult.game.response.NbaGameResponse;
-import com.sportresult.player.response.NbaPlayerResponse;
-import com.sportresult.season.response.NbaSeasonResponse;
-import com.sportresult.standing.response.NbaStandingsResponse;
-import com.sportresult.team.response.NbaTeamResponse;
+import com.sportresult.client.response.game.NbaGameResponse;
+import com.sportresult.client.response.player.NbaPlayerResponse;
+import com.sportresult.client.response.season.NbaSeasonResponse;
+import com.sportresult.client.response.standings.NbaStandingsResponse;
+import com.sportresult.client.response.team.NbaTeamResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

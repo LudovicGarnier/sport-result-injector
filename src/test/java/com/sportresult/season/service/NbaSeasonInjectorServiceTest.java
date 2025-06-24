@@ -2,7 +2,7 @@ package com.sportresult.season.service;
 
 import com.sportresult.season.dto.NbaSeasonDto;
 import com.sportresult.season.repository.NbaSeasonInjectorRepository;
-import com.sportresult.season.response.NbaSeasonResponse;
+import com.sportresult.client.response.season.NbaSeasonResponse;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
