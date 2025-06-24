@@ -86,8 +86,8 @@ public class NbaTeamInjectorService {
                 .logo(teamData.getLogo())
                 .allStar(teamData.getAllStar())
                 .nbaFranchise(teamData.getNbaFranchise())
-                .conference(teamLeaguesData.getTeamLeagueInfo().getConference())
-                .division(teamLeaguesData.getTeamLeagueInfo().getDivision())
+                .conference(teamLeaguesData.getStandard().getConference())
+                .division(teamLeaguesData.getStandard().getDivision())
                 .build();
     }
 
@@ -97,15 +97,15 @@ public class NbaTeamInjectorService {
 
         teamData.setLeagues(teamLeaguesData);
 
-        TeamLeagueInfo teamLeagueInfo = teamLeaguesData.getTeamLeagueInfo();
+        TeamLeagueInfo teamLeagueInfo = teamLeaguesData.getStandard();
         teamLeagueInfo = buildTeamLeaguesInfo(teamData, teamLeagueInfo);
 
-        teamLeaguesData.setTeamLeagueInfo(teamLeagueInfo);
+        teamLeaguesData.setStandard(teamLeagueInfo);
         return teamLeaguesData;
     }
 
     private TeamLeagueInfo buildTeamLeaguesInfo(TeamData teamData, TeamLeagueInfo teamLeagueInfo) {
-        if (teamData.getLeagues().getTeamLeagueInfo() == null) {
+        if (teamData.getLeagues().getStandard() == null) {
             teamLeagueInfo = TeamLeagueInfo.builder().build();
         }
         return teamLeagueInfo;
@@ -113,7 +113,7 @@ public class NbaTeamInjectorService {
 
     private static TeamLeaguesData buildTeamLeaguesData(TeamData teamData, TeamLeaguesData teamLeaguesData) {
         if (teamData.getLeagues() == null) {
-            teamLeaguesData = TeamLeaguesData.builder().teamLeagueInfo(TeamLeagueInfo.builder().build()).build();
+            teamLeaguesData = TeamLeaguesData.builder().standard(TeamLeagueInfo.builder().build()).build();
         }
         return teamLeaguesData;
     }
