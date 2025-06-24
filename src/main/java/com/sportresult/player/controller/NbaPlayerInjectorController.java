@@ -2,7 +2,7 @@ package com.sportresult.player.controller;
 
 import com.sportresult.client.NbaApiClient;
 import com.sportresult.player.dto.NbaPlayerDto;
-import com.sportresult.player.response.NbaPlayerResponse;
+import com.sportresult.client.response.player.NbaPlayerResponse;
 import com.sportresult.player.service.NbaPlayerInjectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

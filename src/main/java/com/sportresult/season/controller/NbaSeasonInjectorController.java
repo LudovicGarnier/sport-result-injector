@@ -2,7 +2,7 @@ package com.sportresult.season.controller;
 
 import com.sportresult.client.NbaApiClient;
 import com.sportresult.season.dto.NbaSeasonDto;
-import com.sportresult.season.response.NbaSeasonResponse;
+import com.sportresult.client.response.season.NbaSeasonResponse;
 import com.sportresult.season.service.NbaSeasonInjectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
