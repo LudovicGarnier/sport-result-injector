@@ -1,4 +1,4 @@
-package com.sportresult.client.response.team;
+package com.sportresult.client.response.statistics.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TeamLeaguesData {
-    private TeamLeagueInfo standard;
+public class TeamDataAndStats {
+    private TeamData team;
+    private TeamStatsInGameData statistics;
 }

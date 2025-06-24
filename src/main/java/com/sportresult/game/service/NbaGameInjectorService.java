@@ -155,4 +155,9 @@ public class NbaGameInjectorService {
                 .build());
     }
 
+    public NbaGameEntity getNbaGameDtoByOldId(Long id) {
+        Optional<NbaGameEntity> nbaGameEntity = nbaGameInjectorRepository.findByOldId(id);
+        return nbaGameEntity.orElse(NbaGameEntity.builder().build());
+    }
+
 }

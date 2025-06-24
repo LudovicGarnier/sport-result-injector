@@ -66,7 +66,7 @@ public class ModelFactory {
                     .division(division)
                     .conference(conference).build();
             TeamLeaguesData leagues = TeamLeaguesData.builder()
-                    .teamLeagueInfo(teamLeagueInfo).build();
+                    .standard(teamLeagueInfo).build();
             teamData.setLeagues(leagues);
         }
 
