@@ -1,12 +1,14 @@
 package com.sportresult.client;
 
 
-import com.sportresult.config.NbaApiFeignClientConfig;
 import com.sportresult.client.response.game.NbaGameResponse;
 import com.sportresult.client.response.player.NbaPlayerResponse;
 import com.sportresult.client.response.season.NbaSeasonResponse;
 import com.sportresult.client.response.standings.NbaStandingsResponse;
+import com.sportresult.client.response.statistics.game.GameStatsResponse;
+import com.sportresult.client.response.statistics.team.TeamStatsResponse;
 import com.sportresult.client.response.team.NbaTeamResponse;
+import com.sportresult.config.NbaApiFeignClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,21 +17,45 @@ import org.springframework.web.bind.annotation.PathVariable;
         configuration = NbaApiFeignClientConfig.class)
 public interface NbaApiClient {
 
+    /*
+    SEASON
+     */
     @GetMapping("/seasons/")
     NbaSeasonResponse getSeasons();
 
+    /*
+    TEAMS
+     */
     @GetMapping("/teams/")
     NbaTeamResponse getTeams();
 
+    /*
+    PLAYERS
+     */
     @GetMapping("/players?team={teamId}&season={seasonYear}")
     NbaPlayerResponse getPlayersPerTeamAndSeason(@PathVariable String teamId, @PathVariable String seasonYear);
 
+    /*
+    GAMES
+     */
     @GetMapping("/games?season={seasonYear}")
     NbaGameResponse getGamesPerSeason(@PathVariable String seasonYear);
 
     @GetMapping("/games?id={id}")
-    NbaGameResponse getGamesPerId(@PathVariable int id);
+    NbaGameResponse getGamesPerId(@PathVariable String id);
 
+    /*
+    STANDINGS
+     */
     @GetMapping("/standings?league={league}&season={seasonYear}")
     NbaStandingsResponse getStandingsPerYear(@PathVariable String league, @PathVariable String seasonYear);
+
+    /*
+    STATISTICS
+     */
+    @GetMapping("/games/statistics?id={id}")
+    GameStatsResponse getStatisticsPerGamesOldId(@PathVariable String id);
+
+    @GetMapping("/teams/statistics?{id}=1&season={seasonYear}")
+    TeamStatsResponse getStatisticsPerTeamAndPerYear(@PathVariable String id, @PathVariable String seasonYear);
 }

@@ -1,15 +1,14 @@
-package com.sportresult.client.response.game;
+package com.sportresult.client.response.statistics.team;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class NbaGameResponse {
-
+public class TeamStatsResponse {
     private String get;
     private Parameters parameters;
     private List<Object> errors;
     private int results;
-    private List<GameData> response;
+    private List<TeamStatsData> response;
 }

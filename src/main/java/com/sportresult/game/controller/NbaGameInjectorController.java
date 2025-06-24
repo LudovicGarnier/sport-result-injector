@@ -42,7 +42,7 @@ public class NbaGameInjectorController {
 
     @Operation(summary = "Retrieve all Games by id from RapidApi and inject them to Database")
     @GetMapping("/id")
-    public Long getGamesPerIdFromApi(int id) {
+    public Long getGamesPerIdFromApi(String id) {
 
         NbaGameResponse nbaGameResponse = nbaApiClient.getGamesPerId(id);
 
