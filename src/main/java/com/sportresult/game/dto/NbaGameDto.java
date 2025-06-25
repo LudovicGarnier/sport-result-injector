@@ -6,7 +6,7 @@ import com.sportresult.team.dto.NbaTeamDto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record NbaGameDto(Long id,
+public record NbaGameDto(Long oldId,
                          Integer season,
                          LocalDateTime gameStart,
                          LocalDateTime gameEnd,
