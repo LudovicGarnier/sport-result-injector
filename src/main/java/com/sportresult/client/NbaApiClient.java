@@ -56,6 +56,6 @@ public interface NbaApiClient {
     @GetMapping("/games/statistics?id={id}")
     GameStatsResponse getStatisticsPerGamesOldId(@PathVariable String id);
 
-    @GetMapping("/teams/statistics?{id}=1&season={seasonYear}")
-    TeamStatsResponse getStatisticsPerTeamAndPerYear(@PathVariable String id, @PathVariable String seasonYear);
+    @GetMapping("/teams/statistics?id={id}&season={season}")
+    TeamStatsResponse getStatisticsPerTeamAndPerYear(@PathVariable long id, @PathVariable int season);
 }
