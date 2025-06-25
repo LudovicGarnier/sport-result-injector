@@ -37,7 +37,20 @@ public class NbaStatisticInjectorController {
         log.info("Statistics injected for game: {}", id);
         GameStatsResponse response = nbaApiClient.getStatisticsPerGamesOldId(id);
 
-        NbaGameStatisticsDto nbaGameStatisticsDtos = nbaStatisticInjectorService.injectGameStatistic(nbaGameEntityOldId, response);
+        NbaGameStatisticsDto nbaGameStatisticsDtos = nbaStatisticInjectorService.injectTeamGameStatistic(nbaGameEntityOldId, response);
+
+        return ResponseEntity.ok(nbaGameStatisticsDtos);
+
+    }
+
+    @Operation(summary = "Retrieve the game statistic from season year from RapidApi and inject them to Database")
+    @GetMapping("/game/year")
+    public ResponseEntity<List<NbaGameStatisticsDto>> getStatisticsPerYearFromApi(String year) {
+        int yearValue = Integer.parseInt(year);
+        log.info("Statistics injected for year: {}", year);
+        GameStatsResponse response = nbaApiClient.getStatisticsPerGamesOldId(year);
+
+        List<NbaGameStatisticsDto> nbaGameStatisticsDtos = nbaStatisticInjectorService.injectAllTeamGameStatisticPerYear(yearValue, response);
 
         return ResponseEntity.ok(nbaGameStatisticsDtos);
 
@@ -48,6 +61,7 @@ public class NbaStatisticInjectorController {
     @GetMapping("/team")
     public ResponseEntity<List<NbaGameDto>> getStatisticsPerTeamFromApi(String id, String year) {
         log.info("Games injected by year: {}", id);
+
         TeamStatsResponse response = nbaApiClient.getStatisticsPerTeamAndPerYear(id, year);
 
 

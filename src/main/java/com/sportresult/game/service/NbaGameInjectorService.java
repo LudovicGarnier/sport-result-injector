@@ -160,4 +160,10 @@ public class NbaGameInjectorService {
         return nbaGameEntity.orElse(NbaGameEntity.builder().build());
     }
 
+
+    public List<NbaGameDto> getNbaGameBySeasonYear(int year) {
+        NbaSeasonEntity nbaSeason = nbaSeasonInjectorService.getNbaSeasonByYear(year);
+        return nbaGameInjectorRepository.findBySeason(nbaSeason).stream().map(NbaGameEntity::toDto).toList();
+    }
+
 }
