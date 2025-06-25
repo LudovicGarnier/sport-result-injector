@@ -3,8 +3,8 @@ package com.sportresult.statsistics.controller;
 import com.sportresult.client.NbaApiClient;
 import com.sportresult.client.response.statistics.game.GameStatsResponse;
 import com.sportresult.client.response.statistics.team.TeamStatsResponse;
-import com.sportresult.game.dto.NbaGameDto;
 import com.sportresult.statsistics.dto.NbaGameStatisticsDto;
+import com.sportresult.statsistics.dto.NbaTeamSeasonStatisticsDto;
 import com.sportresult.statsistics.service.NbaStatisticInjectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -59,13 +59,14 @@ public class NbaStatisticInjectorController {
 
     @Operation(summary = "Retrieve the team statistic per season from RapidApi and inject them to Database")
     @GetMapping("/team")
-    public ResponseEntity<List<NbaGameDto>> getStatisticsPerTeamFromApi(String id, String year) {
-        log.info("Games injected by year: {}", id);
+    public ResponseEntity<NbaTeamSeasonStatisticsDto> getStatisticsPerTeamAndPerYearFromApi(long id, int season) {
+        log.info("Games injected for team {} by year: {}", id, season);
 
-        TeamStatsResponse response = nbaApiClient.getStatisticsPerTeamAndPerYear(id, year);
+        TeamStatsResponse response = nbaApiClient.getStatisticsPerTeamAndPerYear(id, season);
 
+        NbaTeamSeasonStatisticsDto nbaTeamSeasonStatisticsDto = nbaStatisticInjectorService.injectTeamStatisticPerYear(id, season, response);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(nbaTeamSeasonStatisticsDto);
 
     }
 }

@@ -1,7 +1,7 @@
 package com.sportresult.statsistics.entity;
 
 import com.sportresult.season.entity.NbaSeasonEntity;
-import com.sportresult.statsistics.dto.NbaTeamGameStatisticsDto;
+import com.sportresult.statsistics.dto.NbaTeamSeasonStatisticsDto;
 import com.sportresult.team.entity.NbaTeamEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "team_game_statistics")
-public class NbaTeamGameStatisticsEntity {
+@Table(name = "nba_team_season_statistics")
+public class NbaTeamSeasonStatisticsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -112,8 +112,8 @@ public class NbaTeamGameStatisticsEntity {
     @Column(name = "min")
     private String min;
 
-    public NbaTeamGameStatisticsDto toDto() {
-        return new NbaTeamGameStatisticsDto(
+    public NbaTeamSeasonStatisticsDto toDto() {
+        return new NbaTeamSeasonStatisticsDto(
                 team.toDto(),
                 season.toDto(),
                 fastBreakPoints,
@@ -144,5 +144,4 @@ public class NbaTeamGameStatisticsEntity {
                 min
         );
     }
-
 }
