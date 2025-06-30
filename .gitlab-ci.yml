@@ -1,50 +1,50 @@
-stages:
-  - build-test
-  - native-image
+#stages:
+#  - build-test
+#  - native-image
 
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+#variables:
+#  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"
+#  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
 
 # Cache Maven dependencies entre les jobs
-cache:
-  paths:
-    - .m2/repository/
+#cache:
+#  paths:
+#    - .m2/repository/
 
-build-test:
-  stage: build-test
-  image: maven:3.9-eclipse-temurin-21
-  script:
-    - echo "Building application with Java 21"
-    - java -version
-    - mvn clean install
-  artifacts:
-    paths:
-      - target/
+#build-test:
+#  stage: build-test
+#  image: maven:3.9-eclipse-temurin-21
+#  script:
+#    - echo "Building application with Java 21"
+#    - java -version
+#    - mvn clean install
+#  artifacts:
+#    paths:
+#      - target/
 
-native-image:
-  stage: native-image
-  image: maven:3.9-eclipse-temurin-21
-  script:
-    - echo "Installation des dépendances de compilation native"
-    - apt-get update && apt-get install -y gcc g++ zlib1g-dev curl
+#native-image:
+#  stage: native-image
+#  image: maven:3.9-eclipse-temurin-21
+#  script:
+#    - echo "Installation des dépendances de compilation native"
+#    - apt-get update && apt-get install -y gcc g++ zlib1g-dev curl
 
     # Téléchargement manuel de GraalVM
-    - curl -L https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.1/graalvm-community-jdk-21.0.1_linux-x64_bin.tar.gz -o graalvm.tar.gz -o graalvm.tar.gz
-    - mkdir -p /opt/graalvm
-    - tar -xzf graalvm.tar.gz -C /opt/graalvm --strip-components=1
-    - export JAVA_HOME=/opt/graalvm
-    - export PATH=$JAVA_HOME/bin:$PATH
-    - java -version
+#    - curl -L https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.1/graalvm-community-jdk-21.0.1_linux-x64_bin.tar.gz -o graalvm.tar.gz -o graalvm.tar.gz
+#    - mkdir -p /opt/graalvm
+#    - tar -xzf graalvm.tar.gz -C /opt/graalvm --strip-components=1
+#    - export JAVA_HOME=/opt/graalvm
+#    - export PATH=$JAVA_HOME/bin:$PATH
+#    - java -version
 
     # Téléchargement de l'outil Native Image directement
-    - curl -L https://github.com/graalvm/native-build-tools/releases/download/0.10.0/native-image-maven-plugin-0.10.0-jar-with-dependencies.jar -o native-image-plugin.jar
+#    - curl -L https://github.com/graalvm/native-build-tools/releases/download/0.10.0/native-image-maven-plugin-0.10.0-jar-with-dependencies.jar -o native-image-plugin.jar
 
     # Compilation directement avec Spring Boot sans passer par GraalVM Native Image
-    - echo "Compilation avec Spring Boot Native"
+#    - echo "Compilation avec Spring Boot Native"
     #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Pnative spring-boot:build-image -DskipTests
-    - mvn -Pnative native:compile
-  artifacts:
-    paths:
-      - target/
-  allow_failure: true
+#    - mvn -Pnative native:compile
+#  artifacts:
+#    paths:
+#      - target/
+#  allow_failure: true
