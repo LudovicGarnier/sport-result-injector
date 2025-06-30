@@ -26,9 +26,16 @@ public class NbaSeasonInjectorService {
         );
     }
 
+
+    public List<Integer> getNbaSeasonsYears() {
+        return nbaSeasonInjectorRepository.findAll().stream().map(NbaSeasonEntity::getYear).collect(Collectors.toList());
+    }
+
     @Transactional
     public List<NbaSeasonDto> injectSeasons(NbaSeasonResponse response) {
+        log.info("START - injectSeasons: {}", response);
         if (response == null || response.getResponse().isEmpty()) {
+            log.error("No Season to inject - empty response");
             return Collections.emptyList();
         }
 
@@ -45,6 +52,7 @@ public class NbaSeasonInjectorService {
                 .collect(Collectors.toList());
 
         if (!newSeasonEntities.isEmpty()) {
+            log.info("START - injecting seasons");
             nbaSeasonInjectorRepository.saveAll(newSeasonEntities);
         }
 

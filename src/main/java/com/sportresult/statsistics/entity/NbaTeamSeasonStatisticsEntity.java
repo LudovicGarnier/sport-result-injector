@@ -94,7 +94,7 @@ public class NbaTeamSeasonStatisticsEntity {
     @Column(name = "assists")
     private Integer assists;
 
-    @Column(name = "pFouls")
+    @Column(name = "pfouls")
     private Integer pFouls;
 
     @Column(name = "steals")
@@ -108,9 +108,6 @@ public class NbaTeamSeasonStatisticsEntity {
 
     @Column(name = "plusMinus")
     private Integer plusMinus;
-
-    @Column(name = "min")
-    private String min;
 
     public NbaTeamSeasonStatisticsDto toDto() {
         return new NbaTeamSeasonStatisticsDto(
@@ -140,8 +137,7 @@ public class NbaTeamSeasonStatisticsEntity {
                 steals,
                 turnovers,
                 blocks,
-                plusMinus,
-                min
+                plusMinus
         );
     }
 }

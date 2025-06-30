@@ -1,7 +1,8 @@
 package com.sportresult.statsistics.entity;
 
-import com.sportresult.season.entity.NbaSeasonEntity;
-import com.sportresult.statsistics.dto.NbaTeamGameStatisticsDto;
+import com.sportresult.game.entity.NbaGameEntity;
+import com.sportresult.player.entity.NbaPlayerEntity;
+import com.sportresult.statsistics.dto.NbaPlayerGameStatisticsDto;
 import com.sportresult.team.entity.NbaTeamEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,44 +17,33 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "nba_team_game_statistics")
-public class NbaTeamGameStatisticsEntity {
+@Table(name = "nba_player_game_statistic")
+public class NbaPlayerGameStatisticsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
-    private NbaTeamEntity team;
+    @JoinColumn(name = "player_id")
+    NbaPlayerEntity player;
 
     @ManyToOne
-    @JoinColumn(name = "season_id")
-    private NbaSeasonEntity season;
+    @JoinColumn(name = "nba_team_id")
+    NbaTeamEntity nbaTeam;
 
-    @Column(name = "games")
-    private Integer games;
-
-    @Column(name = "fastBreakPoints")
-    private Integer fastBreakPoints;
-
-    @Column(name = "pointsInPaint")
-    private Integer pointsInPaint;
-
-    @Column(name = "biggestLead")
-    private Integer biggestLead;
-
-    @Column(name = "secondChancePoints")
-    private Integer secondChancePoints;
-
-    @Column(name = "pointsOffTurnovers")
-    private Integer pointsOffTurnovers;
-
-    @Column(name = "longestRun")
-    private Integer longestRun;
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private NbaGameEntity game;
 
     @Column(name = "points")
     private Integer points;
+
+    @Column(name = "pos")
+    private String pos;
+
+    @Column(name = "min")
+    private String min;
 
     @Column(name = "fgm")
     private Integer fgm;
@@ -62,7 +52,7 @@ public class NbaTeamGameStatisticsEntity {
     private Integer fga;
 
     @Column(name = "fgp")
-    private Double fgp;
+    private String fgp;
 
     @Column(name = "ftm")
     private Integer ftm;
@@ -71,7 +61,7 @@ public class NbaTeamGameStatisticsEntity {
     private Integer fta;
 
     @Column(name = "ftp")
-    private Double ftp;
+    private String ftp;
 
     @Column(name = "tpm")
     private Integer tpm;
@@ -80,21 +70,21 @@ public class NbaTeamGameStatisticsEntity {
     private Integer tpa;
 
     @Column(name = "tpp")
-    private Double tpp;
+    private String tpp;
 
-    @Column(name = "offReb")
+    @Column(name = "off_reb")
     private Integer offReb;
 
-    @Column(name = "defReb")
+    @Column(name = "def_reb")
     private Integer defReb;
 
-    @Column(name = "totReb")
+    @Column(name = "tot_reb")
     private Integer totReb;
 
     @Column(name = "assists")
     private Integer assists;
 
-    @Column(name = "pFouls")
+    @Column(name = "p_fouls")
     private Integer pFouls;
 
     @Column(name = "steals")
@@ -107,22 +97,19 @@ public class NbaTeamGameStatisticsEntity {
     private Integer blocks;
 
     @Column(name = "plusMinus")
-    private Integer plusMinus;
+    private String plusMinus;
 
-    @Column(name = "min")
-    private String min;
+    @Column(name = "comment")
+    private String comment;
 
-    public NbaTeamGameStatisticsDto toDto() {
-        return new NbaTeamGameStatisticsDto(
-                team.toDto(),
-                season.toDto(),
-                fastBreakPoints,
-                pointsInPaint,
-                biggestLead,
-                secondChancePoints,
-                pointsOffTurnovers,
-                longestRun,
+    public NbaPlayerGameStatisticsDto toDto() {
+        return new NbaPlayerGameStatisticsDto(
+                player.toDto(),
+                nbaTeam.toDto(),
+                game.toDto(),
                 points,
+                pos,
+                min,
                 fgm,
                 fga,
                 fgp,
@@ -141,8 +128,7 @@ public class NbaTeamGameStatisticsEntity {
                 turnovers,
                 blocks,
                 plusMinus,
-                min
+                comment
         );
     }
-
 }

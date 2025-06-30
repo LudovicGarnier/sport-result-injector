@@ -1,14 +1,13 @@
 package com.sportresult.player.service;
 
 import com.sportresult.client.NbaApiClient;
-import com.sportresult.player.dto.NbaPlayerDto;
-import com.sportresult.player.entity.NbaPlayerEntity;
-import com.sportresult.player.repository.NbaPlayerInjectorRepository;
 import com.sportresult.client.response.player.NbaPlayerResponse;
 import com.sportresult.client.response.player.PlayerData;
 import com.sportresult.client.response.player.PlayerLeaguesData;
 import com.sportresult.client.response.player.PlayerLeaguesInfo;
-import com.sportresult.season.service.NbaSeasonInjectorService;
+import com.sportresult.player.dto.NbaPlayerDto;
+import com.sportresult.player.entity.NbaPlayerEntity;
+import com.sportresult.player.repository.NbaPlayerInjectorRepository;
 import com.sportresult.team.dto.NbaTeamDto;
 import com.sportresult.team.service.NbaTeamInjectorService;
 import jakarta.transaction.Transactional;
@@ -28,20 +27,20 @@ public class NbaPlayerInjectorService {
 
     private final NbaPlayerInjectorRepository nbaPlayerInjectorRepository;
 
-    private final NbaSeasonInjectorService nbaSeasonInjectorService;
-
     private final NbaTeamInjectorService nbaTeamInjectorService;
 
     @Transactional
     public Map<Integer, List<List<NbaPlayerDto>>> injectAllPlayerPerYear(NbaApiClient nbaApiClient, int year) {
         Map<Integer, List<List<NbaPlayerDto>>> players = new HashMap<>();
-        List<NbaTeamDto> nbaTeamDtos = nbaTeamInjectorService.findAllTeams();
+        List<NbaTeamDto> nbaTeamDtos = nbaTeamInjectorService.findAllTeamsDto();
         List<List<NbaPlayerDto>> teams = new ArrayList<>();
 
         for (NbaTeamDto nbaTeam : nbaTeamDtos) {
-            NbaPlayerResponse response = nbaApiClient.getPlayersPerTeamAndSeason(Long.toString(nbaTeam.oldId()), Integer.toString(year));
-            List<NbaPlayerDto> playerDtos = injectPlayers(response);
-            teams.add(playerDtos);
+            if (nbaTeam.oldId() != null) {
+                NbaPlayerResponse response = nbaApiClient.getPlayersPerTeamAndSeason(Long.toString(nbaTeam.oldId()), Integer.toString(year));
+                List<NbaPlayerDto> playerDtos = injectPlayers(response);
+                teams.add(playerDtos);
+            }
         }
         players.put(year, teams);
         return players;
@@ -51,7 +50,7 @@ public class NbaPlayerInjectorService {
     public List<NbaPlayerDto> injectPlayers(NbaPlayerResponse response) {
 
         if (response == null || response.getResponse().isEmpty()) {
-            log.info("No players to inject - empty response");
+            log.info("No Players to inject - empty response");
             return List.of();
         }
 
@@ -72,47 +71,23 @@ public class NbaPlayerInjectorService {
                 .toList();
 
         if (newPlayers.isEmpty()) {
-            log.info("All players already exist in database");
+            log.error("All players already exist in database");
             return List.of();
         }
 
+        log.info("START - injecting Players");
         nbaPlayerInjectorRepository.saveAll(newPlayers);
 
         return newPlayers.stream().map(NbaPlayerEntity::toDto).collect(Collectors.toList());
     }
 
-    private NbaPlayerEntity createNbaPlayerEntity(PlayerData playerData) {
-
-        buildPlayerLeagueData(playerData);
-        buildPlayerLeagueInfo(playerData);
-
-        return NbaPlayerEntity.builder()
-                .oldId(playerData.getId())
-                .firstname(playerData.getFirstname())
-                .lastname(playerData.getLastname())
-                .birthDate(buildBirthDate(playerData))
-                .country(playerData.getBirth().getCountry())
-                .startYear(playerData.getNba().getStartYear())
-                .proYear(playerData.getNba().getProYear())
-                .height(playerData.getHeight().getMeters())
-                .weight(playerData.getWeight().getKilograms())
-                .college(playerData.getCollege())
-                .affiliation(playerData.getAffiliation())
-                .jerseyNumber(playerData.getLeaguesData().getPlayerLeaguesInfo().getJerseyNumber())
-                .isActive(playerData.getLeaguesData().getPlayerLeaguesInfo().isActive())
-                .position(playerData.getLeaguesData().getPlayerLeaguesInfo().getPosition())
-                .build();
-    }
-
     private static void buildPlayerLeagueData(PlayerData playerData) {
-        PlayerLeaguesData playerLeaguesData = playerData.getLeaguesData();
         if (playerData.getLeaguesData() == null) {
             playerData.setLeaguesData(PlayerLeaguesData.builder().build());
         }
     }
 
     private static void buildPlayerLeagueInfo(PlayerData playerData) {
-        PlayerLeaguesInfo playerLeaguesInfo = playerData.getLeaguesData().getPlayerLeaguesInfo();
         if (playerData.getLeaguesData().getPlayerLeaguesInfo() == null) {
             playerData.getLeaguesData().setPlayerLeaguesInfo(PlayerLeaguesInfo.builder().build());
         }
@@ -126,5 +101,32 @@ public class NbaPlayerInjectorService {
             return date;
         }
         return null;
+    }
+
+    public Optional<NbaPlayerEntity> getPlayerByOldId(Long oldId) {
+        return nbaPlayerInjectorRepository.findByOldId(oldId);
+    }
+
+    private NbaPlayerEntity createNbaPlayerEntity(PlayerData playerData) {
+
+        buildPlayerLeagueData(playerData);
+        buildPlayerLeagueInfo(playerData);
+
+        return NbaPlayerEntity.builder()
+                .oldId(playerData.getId())
+                .firstname(playerData.getFirstname())
+                .lastname(playerData.getLastname())
+                .birthDate(buildBirthDate(playerData))
+                .country(playerData.getBirth().getCountry())
+                .startYear(playerData.getNba().getStart())
+                .proYear(playerData.getNba().getPro())
+                .height(playerData.getHeight().getMeters())
+                .weight(playerData.getWeight().getKilograms())
+                .college(playerData.getCollege())
+                .affiliation(playerData.getAffiliation())
+                .jerseyNumber(playerData.getLeaguesData().getPlayerLeaguesInfo().getJerseyNumber())
+                .isActive(playerData.getLeaguesData().getPlayerLeaguesInfo().isActive())
+                .position(playerData.getLeaguesData().getPlayerLeaguesInfo().getPosition())
+                .build();
     }
 }

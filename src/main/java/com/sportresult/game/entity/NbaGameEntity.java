@@ -70,10 +70,6 @@ public class NbaGameEntity {
     @Column(name = "home_score")
     private Integer homeScore;
 
-    //@Convert(converter = IntegerListConverter.class)
-    //@Column(name = "home_score_line")
-    //private List<Integer> homeScoreLine = new ArrayList<>();
-
     @Column(name = "home_win")
     private Integer homeWin;
 
@@ -82,10 +78,6 @@ public class NbaGameEntity {
 
     @Column(name = "visitor_score")
     private Integer visitorScore;
-
-    //@Convert(converter = IntegerListConverter.class)
-   // @Column(name = "visitor_score_line")
-    //private List<Integer> visitorScoreLine = new ArrayList<>();
 
     @Column(name = "visitor_win")
     private Integer visitorWin;
@@ -98,19 +90,19 @@ public class NbaGameEntity {
     private Set<String> officials = new HashSet<>();
 
     public NbaGameDto toDto() {
-        if(season == null) {
+        if (season == null) {
             season = NbaSeasonEntity.builder().build();
         }
-        if(arena == null) {
+        if (arena == null) {
             arena = NbaArenaEntity.builder().build();
         }
-        if(home == null) {
+        if (home == null) {
             home = NbaTeamEntity.builder().nbaFranchise(true).allStar(true).build();
         }
-        if(visitor == null) {
+        if (visitor == null) {
             visitor = NbaTeamEntity.builder().nbaFranchise(true).allStar(true).build();
         }
-        if(officials == null) {
+        if (officials == null) {
             officials = new HashSet<>();
         }
         return new NbaGameDto(
