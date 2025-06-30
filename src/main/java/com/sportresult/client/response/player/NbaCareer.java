@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NbaCareer {
-    private int startYear;
-    private int proYear;
+    private int start;
+    private int pro;
 }

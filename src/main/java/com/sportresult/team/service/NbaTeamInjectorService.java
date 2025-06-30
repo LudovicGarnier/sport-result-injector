@@ -25,8 +25,16 @@ public class NbaTeamInjectorService {
 
     private final NbaTeamInjectorRepository nbaTeamInjectorRepository;
 
-    public List<NbaTeamDto> findAllTeams() {
+    public List<NbaTeamDto> findAllTeamsDto() {
         return nbaTeamInjectorRepository.findAll().stream().map(NbaTeamEntity::toDto).collect(Collectors.toList());
+    }
+
+    public List<NbaTeamEntity> findAllTeams() {
+        return nbaTeamInjectorRepository.findAll();
+    }
+
+    public List<Long> findTeamsOldIds() {
+        return nbaTeamInjectorRepository.findAll().stream().map(NbaTeamEntity::getOldId).collect(Collectors.toList());
     }
 
     public Optional<NbaTeamEntity> getTeamByOldId(Long teamId) {
@@ -35,9 +43,9 @@ public class NbaTeamInjectorService {
 
     @Transactional
     public List<NbaTeamDto> injectTeams(NbaTeamResponse response) {
-
+        log.info("START - injectTeams: {}", response);
         if (response == null || response.getResponse().isEmpty()) {
-            log.info("No teams to inject - empty response");
+            log.error("No Team to inject - empty response");
             return List.of();
         }
 
@@ -65,10 +73,11 @@ public class NbaTeamInjectorService {
                 .collect(Collectors.toList());
 
         if (newTeams.isEmpty()) {
-            log.info("All teams already exist in database");
+            log.error("All teams already exist in database");
             return List.of();
         }
 
+        log.info("START - injecting teams");
         nbaTeamInjectorRepository.saveAll(newTeams);
 
         return newTeams.stream().map(NbaTeamEntity::toDto).collect(Collectors.toList());
@@ -76,7 +85,6 @@ public class NbaTeamInjectorService {
 
     private NbaTeamEntity createNbaTeamEntity(TeamData teamData) {
         TeamLeaguesData teamLeaguesData = buildLeagueDatasAndInfoFromNullValues(teamData);
-
         return NbaTeamEntity.builder()
                 .oldId(teamData.getId())
                 .name(teamData.getName())

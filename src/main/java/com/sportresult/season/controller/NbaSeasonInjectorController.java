@@ -7,6 +7,7 @@ import com.sportresult.season.service.NbaSeasonInjectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/seasons")
 @RequiredArgsConstructor
 @Tag(name = "Season")
+@Slf4j
 public class NbaSeasonInjectorController {
 
     private final NbaSeasonInjectorService nbaSeasonInjectorService;
@@ -29,6 +31,7 @@ public class NbaSeasonInjectorController {
     @Operation(summary = "Retrieve all Seasons from RapidApi and inject them to Database")
     @GetMapping
     public ResponseEntity<List<NbaSeasonDto>> getSeasonsFromApi() {
+        log.info("START - getSeasonsFromApi");
         NbaSeasonResponse response = nbaApiClient.getSeasons();
 
         List<NbaSeasonDto> nbaSeasonDtos = nbaSeasonInjectorService.injectSeasons(response);

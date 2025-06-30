@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface NbaTeamSeasonStatisticInjectorRepository extends JpaRepository<NbaTeamSeasonStatisticsEntity, UUID> {
+public interface NbaTeamSeasonStatisticsInjectorRepository extends JpaRepository<NbaTeamSeasonStatisticsEntity, UUID> {
 }

@@ -1,27 +1,25 @@
 package com.sportresult.statsistics.dto;
 
-import com.sportresult.season.dto.NbaSeasonDto;
+import com.sportresult.game.dto.NbaGameDto;
+import com.sportresult.player.dto.NbaPlayerDto;
 import com.sportresult.team.dto.NbaTeamDto;
 
-public record NbaTeamSeasonStatisticsDto(
+public record NbaPlayerGameStatisticsDto(
+        NbaPlayerDto player,
         NbaTeamDto nbaTeam,
-        NbaSeasonDto dto,
-        Integer fastBreakPoints,
-        Integer pointsInPaint,
-        Integer biggestLead,
-        Integer secondChancePoints,
-        Integer pointsOffTurnovers,
-        Integer longestRun,
+        NbaGameDto game,
         Integer points,
+        String pos,
+        String min,
         Integer fgm,
         Integer fga,
-        Double fgp,
+        String fgp,
         Integer ftm,
         Integer fta,
-        Double ftp,
+        String ftp,
         Integer tpm,
         Integer tpa,
-        Double tpp,
+        String tpp,
         Integer offReb,
         Integer defReb,
         Integer totReb,
@@ -30,6 +28,7 @@ public record NbaTeamSeasonStatisticsDto(
         Integer steals,
         Integer turnovers,
         Integer blocks,
-        Integer plusMinus
+        String plusMinus,
+        String comment
 ) {
 }
