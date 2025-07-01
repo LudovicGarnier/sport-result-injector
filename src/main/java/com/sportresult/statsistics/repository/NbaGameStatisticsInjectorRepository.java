@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface NbaGameStatisticInjectorRepository extends JpaRepository<NbaGameStatisticsEntity, UUID> {
+public interface NbaGameStatisticsInjectorRepository extends JpaRepository<NbaGameStatisticsEntity, UUID> {
 
     Optional<NbaGameStatisticsEntity> findByNbaGameEntity_OldId(Long nbaGameEntityOldId);
 

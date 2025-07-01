@@ -6,6 +6,7 @@ import com.sportresult.client.response.player.NbaPlayerResponse;
 import com.sportresult.client.response.season.NbaSeasonResponse;
 import com.sportresult.client.response.standings.NbaStandingsResponse;
 import com.sportresult.client.response.statistics.game.GameStatsResponse;
+import com.sportresult.client.response.statistics.player.PlayerStatsPerGameResponse;
 import com.sportresult.client.response.statistics.team.TeamStatsResponse;
 import com.sportresult.client.response.team.NbaTeamResponse;
 import com.sportresult.config.NbaApiFeignClientConfig;
@@ -53,9 +54,13 @@ public interface NbaApiClient {
     /*
     STATISTICS
      */
-    @GetMapping("/games/statistics?id={id}")
-    GameStatsResponse getStatisticsPerGamesOldId(@PathVariable String id);
+    @GetMapping("/games/statistics?id={gameId}")
+    GameStatsResponse getStatisticsPerGamesOldId(@PathVariable String gameId);
 
-    @GetMapping("/teams/statistics?id={id}&season={season}")
-    TeamStatsResponse getStatisticsPerTeamAndPerYear(@PathVariable long id, @PathVariable int season);
+    @GetMapping("/teams/statistics?id={teamId}&season={season}")
+    TeamStatsResponse getStatisticsPerTeamAndPerYear(@PathVariable long teamId, @PathVariable int season);
+
+    @GetMapping("/players/statistics?game={gameId}")
+    PlayerStatsPerGameResponse getPlayerGameStatisticsPerGameFromApi(@PathVariable long gameId);
+
 }

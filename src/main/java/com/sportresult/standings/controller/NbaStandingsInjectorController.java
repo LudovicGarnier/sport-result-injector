@@ -31,7 +31,7 @@ public class NbaStandingsInjectorController {
     @Operation(summary = "Retrieve all Games by year from RapidApi and inject them to Database")
     @GetMapping
     public ResponseEntity<List<NbaStandingsDto>> getStandingsPerYearFromApi(String seasonYear) {
-        log.info("Standings injected by year: {}", seasonYear);
+        log.info("START - Standings injected by year: {}", seasonYear);
         NbaStandingsResponse response = nbaApiClient.getStandingsPerYear("standard", seasonYear);
 
         List<NbaStandingsDto> dtoList = nbaStandingsInjectorService.injectStandings(response);

@@ -31,9 +31,9 @@ public class NbaStandingsInjectorService {
     private final NbaSeasonInjectorService nbaSeasonInjectorService;
 
     public List<NbaStandingsDto> injectStandings(NbaStandingsResponse response) {
-
+        log.info("START - injectStandings");
         if (response == null || response.getResponse().isEmpty()) {
-            log.info("No players to inject - empty response");
+            log.error("No Standings to inject - empty response");
             return List.of();
         }
 
@@ -54,11 +54,13 @@ public class NbaStandingsInjectorService {
                 .toList();
 
         if (newStandings.isEmpty()) {
-            log.info("All standings already exist in database");
+            log.error("All standings already exist in database");
             return List.of();
         }
 
+        log.info("START - injecting standings");
         nbaStandingsInjectorRepository.saveAll(newStandings);
+
         return newStandings.stream().map(NbaStandingsEntity::toDto).collect(Collectors.toList());
     }
 

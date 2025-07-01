@@ -44,7 +44,7 @@ public class NbaGameInjectorService {
         log.info("START - injectGames");
 
         if (response == null || response.getResponse().isEmpty()) {
-            log.info("No Games to inject - empty response");
+            log.error("No Games to inject - empty response");
             return List.of();
         }
 
@@ -109,8 +109,6 @@ public class NbaGameInjectorService {
                 .homeScore(gameData.getScores().getHome().getPoints())
                 .visitorScore(gameData.getScores().getVisitors().getPoints())
                 .homeWin(gameData.getScores().getHome().getWin())
-                //.homeScoreLine(gameData.getScores().getHome().getLinescore())
-                //.visitorScoreLine(gameData.getScores().getVisitors().getLinescore())
                 .homeLoss(gameData.getScores().getHome().getLoss())
                 .visitorWin(gameData.getScores().getVisitors().getWin())
                 .visitorLoss(gameData.getScores().getVisitors().getLoss())
@@ -155,7 +153,7 @@ public class NbaGameInjectorService {
                 .build());
     }
 
-    public NbaGameEntity getNbaGameDtoByOldId(Long id) {
+    public NbaGameEntity getNbaGameByOldId(Long id) {
         Optional<NbaGameEntity> nbaGameEntity = nbaGameInjectorRepository.findByOldId(id);
         return nbaGameEntity.orElse(NbaGameEntity.builder().build());
     }
