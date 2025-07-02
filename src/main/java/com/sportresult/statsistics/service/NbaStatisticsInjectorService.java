@@ -86,7 +86,14 @@ public class NbaStatisticsInjectorService {
         NbaPlayerEntity nbaPlayer;
         String id = playerStats.getPlayer().getId();
         if (id == null) {
-            nbaPlayer = NbaPlayerEntity.builder().build();
+            nbaPlayer = NbaPlayerEntity.builder()
+                    .startYear(Integer.valueOf(0))
+                    .proYear(Integer.valueOf(0))
+                    .height(Double.valueOf(0))
+                    .weight(Double.valueOf(0))
+                    .jerseyNumber(Integer.valueOf(0))
+                    .build();
+            nbaPlayerInjectorService.save(nbaPlayer);
         } else {
             Optional<NbaPlayerEntity> optionalNbaPlayer = nbaPlayerInjectorService.getPlayerByOldId(Long.valueOf(playerStats.getPlayer().getId()));
             nbaPlayer = optionalNbaPlayer.orElseGet(() -> NbaPlayerEntity.builder().build());
