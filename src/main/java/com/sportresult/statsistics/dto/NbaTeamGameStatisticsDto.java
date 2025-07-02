@@ -1,12 +1,12 @@
 package com.sportresult.statsistics.dto;
 
 
-import com.sportresult.season.dto.NbaSeasonDto;
+import com.sportresult.game.dto.NbaGameDto;
 import com.sportresult.team.dto.NbaTeamDto;
 
 public record NbaTeamGameStatisticsDto(
         NbaTeamDto nbaTeam,
-        NbaSeasonDto dto,
+        NbaGameDto gameDto,
         Integer fastBreakPoints,
         Integer pointsInPaint,
         Integer biggestLead,
