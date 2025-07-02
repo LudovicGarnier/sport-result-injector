@@ -81,6 +81,15 @@ public class NbaPlayerInjectorService {
         return newPlayers.stream().map(NbaPlayerEntity::toDto).collect(Collectors.toList());
     }
 
+    @Transactional
+    public NbaPlayerEntity save(NbaPlayerEntity nbaPlayerEntity) {
+        return nbaPlayerInjectorRepository.saveAndFlush(nbaPlayerEntity);
+    }
+
+    public Optional<NbaPlayerEntity> getPlayerByOldId(Long oldId) {
+        return nbaPlayerInjectorRepository.findByOldId(oldId);
+    }
+
     private static void buildPlayerLeagueData(PlayerData playerData) {
         if (playerData.getLeaguesData() == null) {
             playerData.setLeaguesData(PlayerLeaguesData.builder().build());
@@ -101,10 +110,6 @@ public class NbaPlayerInjectorService {
             return date;
         }
         return null;
-    }
-
-    public Optional<NbaPlayerEntity> getPlayerByOldId(Long oldId) {
-        return nbaPlayerInjectorRepository.findByOldId(oldId);
     }
 
     private NbaPlayerEntity createNbaPlayerEntity(PlayerData playerData) {

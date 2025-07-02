@@ -118,4 +118,19 @@ public class NbaStatisticsInjectorController {
 
         return ResponseEntity.ok(statisticsDtos);
     }
+
+    @Operation(summary = "Retrieve All player statistics per season from RapidApi and inject them to Database")
+    @GetMapping("/player/game/season")
+    public ResponseEntity<Map<Integer, List<NbaPlayerGameStatisticsDto>>> getPlayerGameStatisticsFromApi(int season) {
+        Map<Integer, List<NbaPlayerGameStatisticsDto>> statisticsDtoMap = new HashMap<>();
+        List<NbaGameDto> nbaGameDtos = nbaGameInjectorService.getNbaGameBySeasonYear(season);
+        List<NbaPlayerGameStatisticsDto> statisticsDtos = List.of();
+        for (NbaGameDto gameDto : nbaGameDtos) {
+            PlayerStatsPerGameResponse response = nbaApiClient.getPlayerGameStatisticsPerGameFromApi(gameDto.oldId());
+            statisticsDtos = nbaStatisticsInjectorService.injectPlayerGameStatistic(response);
+        }
+        statisticsDtoMap.put(season, statisticsDtos);
+
+        return ResponseEntity.ok(statisticsDtoMap);
+    }
 }
