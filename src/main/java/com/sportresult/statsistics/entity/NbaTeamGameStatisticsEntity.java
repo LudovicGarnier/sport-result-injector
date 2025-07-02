@@ -1,5 +1,6 @@
 package com.sportresult.statsistics.entity;
 
+import com.sportresult.game.entity.NbaGameEntity;
 import com.sportresult.season.entity.NbaSeasonEntity;
 import com.sportresult.statsistics.dto.NbaTeamGameStatisticsDto;
 import com.sportresult.team.entity.NbaTeamEntity;
@@ -28,11 +29,8 @@ public class NbaTeamGameStatisticsEntity {
     private NbaTeamEntity team;
 
     @ManyToOne
-    @JoinColumn(name = "season_id")
-    private NbaSeasonEntity season;
-
-    @Column(name = "games")
-    private Integer games;
+    @JoinColumn(name = "game_id")
+    private NbaGameEntity game;
 
     @Column(name = "fastBreakPoints")
     private Integer fastBreakPoints;
@@ -115,7 +113,7 @@ public class NbaTeamGameStatisticsEntity {
     public NbaTeamGameStatisticsDto toDto() {
         return new NbaTeamGameStatisticsDto(
                 team.toDto(),
-                season.toDto(),
+                game.toDto(),
                 fastBreakPoints,
                 pointsInPaint,
                 biggestLead,

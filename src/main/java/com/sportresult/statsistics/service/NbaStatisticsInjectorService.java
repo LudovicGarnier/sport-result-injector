@@ -125,16 +125,20 @@ public class NbaStatisticsInjectorService {
         VISITOR STATS
          */
         TeamStatsInGameData visitorStatistics = gameStatsDatas.getFirst().getStatistics().getFirst();
-        NbaTeamGameStatisticsEntity visitorNbaTeamGameStatisticsEntity = buildNbaTeamGameStatisticEntity(visitorNbaTeam, visitorStatistics);
+        NbaTeamGameStatisticsEntity visitorNbaTeamGameStatisticsEntity = buildNbaTeamGameStatisticEntity(nbaGameEntity, visitorNbaTeam, visitorStatistics);
         nbaTeamGameStatisticsInjectorRepository.save(visitorNbaTeamGameStatisticsEntity);
         /*
         HOME STATS
          */
         TeamStatsInGameData homeStatistics = gameStatsDatas.getLast().getStatistics().getFirst();
-        NbaTeamGameStatisticsEntity homeNbaTeamGameStatisticsEntity = buildNbaTeamGameStatisticEntity(homeNbaTeam, homeStatistics);
+        NbaTeamGameStatisticsEntity homeNbaTeamGameStatisticsEntity = buildNbaTeamGameStatisticEntity(nbaGameEntity, homeNbaTeam, homeStatistics);
         nbaTeamGameStatisticsInjectorRepository.save(homeNbaTeamGameStatisticsEntity);
 
-        NbaGameStatisticsEntity nbaGameStatisticsEntity = NbaGameStatisticsEntity.builder().nbaGameEntity(nbaGameEntity).homeTeamStatisticsEntity(homeNbaTeamGameStatisticsEntity).visitorTeamStatisticsEntity(visitorNbaTeamGameStatisticsEntity).build();
+        NbaGameStatisticsEntity nbaGameStatisticsEntity = NbaGameStatisticsEntity.builder()
+                .nbaGameEntity(nbaGameEntity)
+                .homeTeamStatisticsEntity(homeNbaTeamGameStatisticsEntity)
+                .visitorTeamStatisticsEntity(visitorNbaTeamGameStatisticsEntity)
+                .build();
 
         nbaGameStatisticsInjectorRepository.saveAndFlush(nbaGameStatisticsEntity);
 
@@ -233,10 +237,12 @@ public class NbaStatisticsInjectorService {
                 .build();
     }
 
-    private NbaTeamGameStatisticsEntity buildNbaTeamGameStatisticEntity(NbaTeamEntity nbaTeam,
+    private NbaTeamGameStatisticsEntity buildNbaTeamGameStatisticEntity(NbaGameEntity nbaGame,
+                                                                        NbaTeamEntity nbaTeam,
                                                                         TeamStatsInGameData teamStatsInGameData) {
         return NbaTeamGameStatisticsEntity.builder()
                 .team(nbaTeam)
+                .game(nbaGame)
                 .fga(teamStatsInGameData.getFga())
                 .fgm(teamStatsInGameData.getFgm())
                 .fgp(teamStatsInGameData.getFgp())
