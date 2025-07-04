@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerLeaguesInfo {
-    private int jerseyNumber;
-    private boolean isActive;
-    private String position;
+    private int jersey;
+    private boolean active;
+    private String pos;
 }

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerLeaguesData {
-    private PlayerLeaguesInfo playerLeaguesInfo;
+    private PlayerLeaguesInfo standard;
 }
