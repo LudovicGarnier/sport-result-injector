@@ -91,14 +91,14 @@ public class NbaPlayerInjectorService {
     }
 
     private static void buildPlayerLeagueData(PlayerData playerData) {
-        if (playerData.getLeaguesData() == null) {
-            playerData.setLeaguesData(PlayerLeaguesData.builder().build());
+        if (playerData.getLeagues() == null) {
+            playerData.setLeagues(PlayerLeaguesData.builder().build());
         }
     }
 
     private static void buildPlayerLeagueInfo(PlayerData playerData) {
-        if (playerData.getLeaguesData().getPlayerLeaguesInfo() == null) {
-            playerData.getLeaguesData().setPlayerLeaguesInfo(PlayerLeaguesInfo.builder().build());
+        if (playerData.getLeagues().getStandard() == null) {
+            playerData.getLeagues().setStandard(PlayerLeaguesInfo.builder().build());
         }
     }
 
@@ -129,9 +129,9 @@ public class NbaPlayerInjectorService {
                 .weight(playerData.getWeight().getKilograms())
                 .college(playerData.getCollege())
                 .affiliation(playerData.getAffiliation())
-                .jerseyNumber(playerData.getLeaguesData().getPlayerLeaguesInfo().getJerseyNumber())
-                .isActive(playerData.getLeaguesData().getPlayerLeaguesInfo().isActive())
-                .position(playerData.getLeaguesData().getPlayerLeaguesInfo().getPosition())
+                .jerseyNumber(playerData.getLeagues().getStandard().getJersey())
+                .isActive(playerData.getLeagues().getStandard().isActive())
+                .position(playerData.getLeagues().getStandard().getPos())
                 .build();
     }
 }

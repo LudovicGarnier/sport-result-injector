@@ -21,5 +21,5 @@ public class PlayerData {
     private Weight weight;
     private String college;
     private String affiliation;
-    private PlayerLeaguesData leaguesData;
+    private PlayerLeaguesData leagues;
 }
