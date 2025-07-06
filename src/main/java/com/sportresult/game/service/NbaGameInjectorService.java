@@ -2,13 +2,10 @@ package com.sportresult.game.service;
 
 import com.sportresult.arena.entity.NbaArenaEntity;
 import com.sportresult.arena.service.NbaArenaInjectorService;
+import com.sportresult.client.response.game.*;
 import com.sportresult.game.dto.NbaGameDto;
 import com.sportresult.game.entity.NbaGameEntity;
 import com.sportresult.game.repository.NbaGameInjectorRepository;
-import com.sportresult.client.response.game.Arena;
-import com.sportresult.client.response.game.GameData;
-import com.sportresult.client.response.game.NbaGameResponse;
-import com.sportresult.client.response.game.ParticipantTeam;
 import com.sportresult.season.entity.NbaSeasonEntity;
 import com.sportresult.season.service.NbaSeasonInjectorService;
 import com.sportresult.team.entity.NbaTeamEntity;
@@ -92,6 +89,9 @@ public class NbaGameInjectorService {
 
         NbaSeasonEntity nbaSeason = nbaSeasonInjectorService.getNbaSeasonByYear(gameData.getSeason());
 
+        List<String> visitorLineScore = gameData.getScores().getVisitors().getLinescore().stream().map(LineScore::getQuarterScore).toList();
+        List<String> homeLineScore = gameData.getScores().getHome().getLinescore().stream().map(LineScore::getQuarterScore).toList();
+
         return NbaGameEntity.builder()
                 .oldId(gameData.getId())
                 .season(nbaSeason)
@@ -106,6 +106,8 @@ public class NbaGameInjectorService {
                 .timesTied(gameData.getTimesTied())
                 .leadChanges(gameData.getLeadChanges())
                 .officials(Set.of(String.valueOf(gameData.getOfficials())))
+                .visitorLineScore(visitorLineScore)
+                .homeLineScore(homeLineScore)
                 .homeScore(gameData.getScores().getHome().getPoints())
                 .visitorScore(gameData.getScores().getVisitors().getPoints())
                 .homeWin(gameData.getScores().getHome().getWin())

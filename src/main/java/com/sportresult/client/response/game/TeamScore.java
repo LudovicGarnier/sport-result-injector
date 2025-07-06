@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,6 +18,6 @@ public class TeamScore {
     private Integer win;
     private Integer loss;
     private Series series;
-    //private List<LineScore> linescore;
+    private List<LineScore> linescore;
     private Integer points;
 }
