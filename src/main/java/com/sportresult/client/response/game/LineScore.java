@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LineScore {
-    private Integer quarterScore;
+    private String quarterScore;
 }

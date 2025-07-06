@@ -5,6 +5,7 @@ import com.sportresult.game.dto.NbaGameDto;
 import com.sportresult.season.entity.NbaSeasonEntity;
 import com.sportresult.team.entity.NbaTeamEntity;
 import com.sportresult.utils.IntegerListConverter;
+import com.sportresult.utils.StringListConverter;
 import com.sportresult.utils.UniqueStringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -89,6 +90,14 @@ public class NbaGameEntity {
     @Column(name = "officials")
     private Set<String> officials = new HashSet<>();
 
+    @Convert(converter = StringListConverter.class)
+    @Column(name = "visitor_line_score")
+    private List<String> visitorLineScore = new ArrayList<>();
+
+    @Convert(converter = StringListConverter.class)
+    @Column(name = "home_line_score")
+    private List<String> homeLineScore = new ArrayList<>();
+
     public NbaGameDto toDto() {
         if (season == null) {
             season = NbaSeasonEntity.builder().build();
@@ -105,6 +114,13 @@ public class NbaGameEntity {
         if (officials == null) {
             officials = new HashSet<>();
         }
+        if (visitorLineScore == null) {
+            visitorLineScore = new ArrayList<>();
+        }
+        if (homeLineScore == null) {
+            homeLineScore = new ArrayList<>();
+        }
+
         return new NbaGameDto(
                 oldId,
                 season.getYear(),
@@ -119,6 +135,8 @@ public class NbaGameEntity {
                 timesTied,
                 leadChanges,
                 officials.stream().toList(),
+                visitorLineScore,
+                homeLineScore,
                 homeScore,
                 visitorScore,
                 homeWin,
